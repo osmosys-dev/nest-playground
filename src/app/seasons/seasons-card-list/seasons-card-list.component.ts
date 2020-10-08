@@ -1,61 +1,54 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {Course} from "../../../../shared/course";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import {EditCourseDialogComponent} from "../edit-course-dialog/edit-course-dialog.component";
-import {defaultDialogConfig} from '../shared/default-dialog-config';
-import {CoursesHttpService} from '../services/courses-http.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
+import { Season } from '../../../../shared/season';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { EditSeasonDialogComponent } from '../edit-season-dialog/edit-season-dialog.component';
+import { defaultDialogConfig } from '../shared/default-dialog-config';
+import { SeasonsHttpService } from '../services/seasons-http.service';
 
 @Component({
-    selector: 'courses-card-list',
-    templateUrl: './courses-card-list.component.html',
-    styleUrls: ['./courses-card-list.component.css']
+  selector: 'seasons-card-list',
+  templateUrl: './seasons-card-list.component.html',
+  styleUrls: ['./seasons-card-list.component.css'],
 })
-export class CoursesCardListComponent implements OnInit {
+export class SeasonsCardListComponent implements OnInit {
+  @Input()
+  seasons: Season[];
 
-    @Input()
-    courses: Course[];
+  @Output()
+  seasonChanged = new EventEmitter();
 
-    @Output()
-    courseChanged = new EventEmitter();
+  constructor(
+    private dialog: MatDialog,
+    private seasonsService: SeasonsHttpService
+  ) {}
 
-    constructor(
-      private dialog: MatDialog,
-      private coursesService: CoursesHttpService) {
-    }
+  ngOnInit() {}
 
-    ngOnInit() {
+  editSeason(season: Season) {
+    const dialogConfig = defaultDialogConfig();
 
-    }
+    dialogConfig.data = {
+      dialogTitle: 'Edit Season',
+      season,
+      mode: 'update',
+    };
 
-    editCourse(course:Course) {
-
-        const dialogConfig = defaultDialogConfig();
-
-        dialogConfig.data = {
-          dialogTitle:"Edit Course",
-          course,
-          mode: 'update'
-        };
-
-        this.dialog.open(EditCourseDialogComponent, dialogConfig)
-          .afterClosed()
-          .subscribe(() => this.courseChanged.emit());
-
-    }
-
-  onDeleteCourse(course:Course) {
-      this.coursesService.deleteCourse(course._id)
-        .subscribe(
-          () => this.courseChanged.emit());
+    this.dialog
+      .open(EditSeasonDialogComponent, dialogConfig)
+      .afterClosed()
+      .subscribe(() => this.seasonChanged.emit());
   }
 
+  onDeleteSeason(season: Season) {
+    this.seasonsService
+      .deleteSeason(season._id)
+      .subscribe(() => this.seasonChanged.emit());
+  }
 }
-
-
-
-
-
-
-
-
-

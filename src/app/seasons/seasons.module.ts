@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
-import { CoursesCardListComponent } from './courses-card-list/courses-card-list.component';
-import { EditCourseDialogComponent } from './edit-course-dialog/edit-course-dialog.component';
-import { CoursesHttpService } from './services/courses-http.service';
-import { CourseComponent } from './course/course.component';
+import { SeasonsCardListComponent } from './seasons-card-list/seasons-card-list.component';
+import { EditSeasonDialogComponent } from './edit-season-dialog/edit-season-dialog.component';
+import { SeasonsHttpService } from './services/seasons-http.service';
+import { SeasonComponent } from './season/season.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';

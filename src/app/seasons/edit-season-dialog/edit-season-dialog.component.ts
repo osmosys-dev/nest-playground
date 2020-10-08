@@ -1,21 +1,21 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Course } from '../../../../shared/season';
+import { Season } from '../../../../shared/season';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { CoursesHttpService } from '../services/courses-http.service';
+import { SeasonsHttpService } from '../services/seasons-http.service';
 
 @Component({
-  selector: 'course-dialog',
-  templateUrl: './edit-course-dialog.component.html',
-  styleUrls: ['./edit-course-dialog.component.css'],
+  selector: 'season-dialog',
+  templateUrl: './edit-season-dialog.component.html',
+  styleUrls: ['./edit-season-dialog.component.css'],
 })
-export class EditCourseDialogComponent {
+export class EditSeasonDialogComponent {
   form: FormGroup;
 
   dialogTitle: string;
 
-  course: Course;
+  season: Season;
 
   mode: 'create' | 'update';
 
@@ -23,12 +23,12 @@ export class EditCourseDialogComponent {
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<EditCourseDialogComponent>,
+    private dialogRef: MatDialogRef<EditSeasonDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data,
-    private coursesService: CoursesHttpService
+    private seasonsService: SeasonsHttpService
   ) {
     this.dialogTitle = data.dialogTitle;
-    this.course = data.course;
+    this.season = data.season;
     this.mode = data.mode;
 
     const formControls = {
@@ -38,10 +38,10 @@ export class EditCourseDialogComponent {
       promo: [false, []],
     };
 
-    if (this.mode == 'update') {
+    if (this.mode === 'update') {
       this.form = this.fb.group(formControls);
       this.form.patchValue({ ...data.course });
-    } else if (this.mode == 'create') {
+    } else if (this.mode === 'create') {
       this.form = this.fb.group({
         ...formControls,
         url: ['', Validators.required],
@@ -55,18 +55,18 @@ export class EditCourseDialogComponent {
   }
 
   onSave() {
-    const changes: Partial<Course> = {
+    const changes: Partial<Season> = {
       ...this.form.value,
     };
 
-    if (this.mode == 'update') {
-      this.coursesService
-        .updateCourse(this.course._id, changes)
-        .subscribe((course) => this.dialogRef.close(course));
-    } else if (this.mode == 'create') {
-      this.coursesService
-        .createCourse(changes)
-        .subscribe((course) => this.dialogRef.close(course));
+    if (this.mode === 'update') {
+      this.seasonsService
+        .updateSeason(this.season._id, changes)
+        .subscribe((season) => this.dialogRef.close(season));
+    } else if (this.mode === 'create') {
+      this.seasonsService
+        .createSeason(changes)
+        .subscribe((season) => this.dialogRef.close(season));
     }
   }
 }

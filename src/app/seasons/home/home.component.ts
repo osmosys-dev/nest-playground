@@ -1,86 +1,71 @@
-import {Component, OnInit} from '@angular/core';
-import {compareCourses, Course} from '../../../../shared/course';
-import {Observable} from "rxjs";
-import {defaultDialogConfig} from '../shared/default-dialog-config';
-import {EditCourseDialogComponent} from '../edit-course-dialog/edit-course-dialog.component';
+import { Component, OnInit } from '@angular/core';
+import { compareSeasons, Season } from '../../../../shared/season';
+import { Observable } from 'rxjs';
+import { defaultDialogConfig } from '../shared/default-dialog-config';
+import { EditSeasonDialogComponent } from '../edit-season-dialog/edit-season-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import {map, shareReplay} from 'rxjs/operators';
-import {CoursesHttpService} from '../services/courses-http.service';
-
-
+import { map, shareReplay } from 'rxjs/operators';
+import { SeasonsHttpService } from '../services/seasons-http.service';
 
 @Component({
-    selector: 'home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css']
+  selector: 'home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  promoTotal$: Observable<number>;
 
-    promoTotal$: Observable<number>;
+  loading$: Observable<boolean>;
 
-    loading$: Observable<boolean>;
+  actionSeasons$: Observable<Season[]>;
 
-    beginnerCourses$: Observable<Course[]>;
+  comedySeasons$: Observable<Season[]>;
 
-    advancedCourses$: Observable<Course[]>;
+  constructor(
+    private dialog: MatDialog,
+    private seasonsHttpService: SeasonsHttpService
+  ) {}
 
-
-    constructor(
-      private dialog: MatDialog,
-      private coursesHttpService: CoursesHttpService) {
-
-    }
-
-    ngOnInit() {
-      this.reload();
-    }
-
-  reload() {
-
-    const courses$ = this.coursesHttpService.findAllCourses()
-      .pipe(
-        map(courses => courses.sort(compareCourses)),
-        shareReplay()
-      );
-
-    this.loading$ = courses$.pipe(map(courses => !!courses));
-
-    this.beginnerCourses$ = courses$
-      .pipe(
-        map(courses => courses.filter(course => course.category == 'BEGINNER'))
-      );
-
-
-    this.advancedCourses$ = courses$
-      .pipe(
-        map(courses => courses.filter(course => course.category == 'ADVANCED'))
-      );
-
-    this.promoTotal$ = courses$
-        .pipe(
-            map(courses => courses.filter(course => course.promo).length)
-        );
-
+  ngOnInit() {
+    this.reload();
   }
 
-  onAddCourse() {
+  reload() {
+    const seasons$ = this.seasonsHttpService.findAllSeasons().pipe(
+      map((seasons) => seasons.sort(compareSeasons)),
+      shareReplay()
+    );
 
+    this.loading$ = seasons$.pipe(map((seasons) => !!seasons));
+
+    this.actionSeasons$ = seasons$.pipe(
+      map((seasons) => seasons.filter((season) => season.category === 'ACTION'))
+    );
+
+    this.comedySeasons$ = seasons$.pipe(
+      map((seasons) => seasons.filter((season) => season.category === 'COMEDY'))
+    );
+
+    this.promoTotal$ = seasons$.pipe(
+      map((seasons) => seasons.filter((season) => season.promo).length)
+    );
+  }
+
+  onAddSeason() {
     const dialogConfig = defaultDialogConfig();
 
     dialogConfig.data = {
-      dialogTitle:"Create Course",
-      mode: 'create'
+      dialogTitle: 'Create Season',
+      mode: 'create',
     };
 
-    this.dialog.open(EditCourseDialogComponent, dialogConfig)
+    this.dialog
+      .open(EditSeasonDialogComponent, dialogConfig)
       .afterClosed()
-      .subscribe(data => {
+      .subscribe((data) => {
         if (data) {
           this.reload();
         }
       });
-
   }
-
-
 }

@@ -1,15 +1,11 @@
-
-
-.course-card {
-    margin: 20px 10px;
+.season-card {
+  margin: 20px 10px;
 }
 
-.course-actions {
-    text-align: center;
-
+.season-actions {
+  text-align: center;
 }
 
-.course-actions button {
+.season-actions button {
   margin-right: 10px;
 }
-

@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 import { MatListModule } from '@angular/material/list';
@@ -19,9 +20,9 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 
 const routes: Routes = [
   {
-    path: 'courses',
+    path: 'seasons',
     loadChildren: () =>
-      import('./courses/seasons.module').then((m) => m.CoursesModule),
+      import('./seasons/seasons.module').then((m) => m.SeasonsModule),
   },
   {
     path: '**',
@@ -37,6 +38,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule,
     MatMenuModule,
+    MatButtonModule,
     MatIconModule,
     MatSidenavModule,
     MatProgressSpinnerModule,
