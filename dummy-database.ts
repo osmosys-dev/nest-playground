@@ -1,3 +1,4 @@
+import { Season } from "shared/season";
 
 export const USERS = {
   1: {
@@ -498,7 +499,7 @@ export function findAllUsers() {
   return <any[]> Object.values(USERS);
 }
 
-export function findAllSeasons() {
+export function findAllSeasons(): Season[] {
   return Object.values(SEASONS);
 }
 

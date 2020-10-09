@@ -1,11 +1,13 @@
 import { Controller, Get } from "@nestjs/common";
+import { findAllSeasons } from "dummy-database";
+import { Season } from "shared/season";
 
 @Controller({})
 export class SeasonsController {
 
-    @Get('api/hello-world')
-    async helloWorld(): Promise<string> {
-        return "Hello world!"
+    @Get('api/seasons')
+    async getAllSeasons(): Promise<Season[]> {
+        return findAllSeasons()
     }
 
 }
