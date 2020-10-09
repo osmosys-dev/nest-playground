@@ -16,7 +16,6 @@ export const USERS = {
 
 
 export const SEASONS: any = {
-
   1: {
     id: 1,
     description: 'Breaking Bad',
@@ -85,14 +84,10 @@ export const SEASONS: any = {
     url: 'planet-earth',
     promo: false
   },
- 
-
-
 };
 
 
 export const EPISODES = {
-
   //Breaking bad
   1: {
     id: 1,
