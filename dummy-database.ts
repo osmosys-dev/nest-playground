@@ -1,4 +1,4 @@
-import { Season } from "shared/season";
+import { Season } from "./shared/season";
 
 export const USERS = {
   1: {
