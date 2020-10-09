@@ -1,7 +1,7 @@
 export interface Season {
   _id: string;
   url: string;
-  iconUrl: string;
+  imageUrl: string;
   description: string;
   longDescription?: string;
   category: string;
