@@ -2,7 +2,7 @@ export interface Season {
   _id: string;
   description: string;
   longDescription?: string;
-  iconUrl: string;
+  imageUrl: string;
   category: string;
   episodesCount: number;
   seqNo: number;
