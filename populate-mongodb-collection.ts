@@ -3,14 +3,11 @@ import {findAllSeasons, findAllUsers, findEpisodesForSeason} from './dummy-datab
 import util from 'util';
 import password from 'password-hash-and-salt';
 import { MongoClient, ObjectID } from "mongodb";
+import { DBName, MONGODB_CONNECTION_URL } from 'src/constants';
 
 console.log("Populating the MongoDB database with dummy data ...");
 
 
-const MONGODB_CONNECTION_URL = 'mongodb+srv://playground-admin:MiH5O5sXIxMw2MPF@cluster0.4zunp.mongodb.net/<dbname>?retryWrites=true&w=majority';
-// Database Name
-const dbName = 'nest-js-playground';
-// Create a new MongoClient
 const client = new MongoClient(MONGODB_CONNECTION_URL);
 // Use connect method to connect to the Server
 client.connect(async (err, client) => {
@@ -20,7 +17,7 @@ client.connect(async (err, client) => {
       process.exit();
     }
     console.log("Connected correctly to server");
-    const db = client.db(dbName);
+    const db = client.db(DBName);
     // Seasons collection
     const seasons = findAllSeasons();
 
