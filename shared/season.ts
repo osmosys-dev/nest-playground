@@ -1,4 +1,6 @@
-export interface Season {
+import { Document } from "mongoose";
+
+export interface Season extends Document{
   _id: string;
   description: string;
   longDescription?: string;
