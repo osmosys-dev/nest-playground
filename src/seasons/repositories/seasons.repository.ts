@@ -14,5 +14,8 @@ export class SeasonsRepository {
     async updateSeason(seasonId: string, updatedData: Partial<Season>): Promise<Season> {
         return this.seasonModel.findOneAndUpdate({_id: seasonId}, updatedData,{new: true, useFindAndModify: false})
     }
-
+    
+    async deleteSeason(seasonId: string){
+        return this.seasonModel.deleteOne({_id:seasonId})
+    }
 }

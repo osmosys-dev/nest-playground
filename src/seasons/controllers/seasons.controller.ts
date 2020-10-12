@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Put } from "@nestjs/common";
 import { Season } from "shared/season";
 import { SeasonsRepository } from "../repositories/seasons.repository";
 
@@ -14,9 +14,14 @@ export class SeasonsController {
     @Put(':seasonId')
     async updateSeason(
         @Param('seasonId') seasonId: string, 
-        @Body() updatedData: Partial<Season>): Promise<Season>{
-            console.log('Processing season update...');
+        @Body() updatedData: Partial<Season>
+        ): Promise<Season>{
             return this.seasonDB.updateSeason(seasonId, updatedData)
-        }
+    }
+
+    @Delete(':seasonId')
+    async deleteSeason(@Param('seasonId') seasonId: string){
+        return this.seasonDB.deleteSeason(seasonId)
+    }
 
 }
