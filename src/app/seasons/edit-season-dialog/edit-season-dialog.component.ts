@@ -40,7 +40,7 @@ export class EditSeasonDialogComponent {
 
     if (this.mode === 'update') {
       this.form = this.fb.group(formControls);
-      this.form.patchValue({ ...data.course });
+      this.form.patchValue({ ...data.season });
     } else if (this.mode === 'create') {
       this.form = this.fb.group({
         ...formControls,
