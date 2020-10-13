@@ -3,8 +3,17 @@ import { Model } from "mongoose";
 import { Season } from "shared/season";
 
 export class SeasonsRepository {
+ 
     constructor(@InjectModel('Season') private seasonModel: Model<Season> ) {
         
+    }
+
+    async addSeason(newData: Partial<Season>):Promise<Season> {
+        const newSeason = new this.seasonModel(newData)
+        
+       await newSeason.save()
+
+       return newSeason.toObject({versionKey:false})
     }
     
     async findAll(): Promise<Season[]> {

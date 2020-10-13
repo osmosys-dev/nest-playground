@@ -1,10 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { Season } from "shared/season";
 import { SeasonsRepository } from "../repositories/seasons.repository";
 
 @Controller({path:'seasons'})
 export class SeasonsController {
     constructor(private seasonDB: SeasonsRepository){}
+    @Post()
+    async addSeason(@Body() newData:Partial<Season>) {
+        return this.seasonDB.addSeason(newData)
+    }
 
     @Get()
     async getAllSeasons(): Promise<Season[]> {
