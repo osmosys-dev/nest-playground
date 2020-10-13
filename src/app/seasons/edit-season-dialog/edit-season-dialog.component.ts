@@ -45,7 +45,7 @@ export class EditSeasonDialogComponent {
       this.form = this.fb.group({
         ...formControls,
         url: ['', Validators.required],
-        iconUrl: ['', Validators.required],
+        imageUrl: ['', Validators.required],
       });
     }
   }
